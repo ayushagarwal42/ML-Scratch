@@ -13,6 +13,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from src.Classification.KNN import KNN
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+from src.Classification.SVM import SVM
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
@@ -86,7 +87,7 @@ lgr.fit(X_train, y_train)
 lgr_pred = lgr.predict(X_test)
 #### logistic accuracy
 lgr_acc = accuracy_score(y_test, lgr_pred)
-print(lgr_acc)
+print("Lgr_acc",lgr_acc)
 
 print("Classification Report:")
 print(classification_report(y_test, lgr_pred))
@@ -99,7 +100,7 @@ lgr = LogisticRegression(lr=0.01)
 lgr.fit(X_train, y_train)
 lgr_pred = lgr.predict(X_test)
 lgr_acc = accuracy_score(y_test, lgr_pred)
-print("scratch lgr ", lgr_acc)
+print("scratch lgr", lgr_acc)
 
 ## KNN
 knn = KNeighborsClassifier(n_neighbors=13)
@@ -108,7 +109,7 @@ knn.fit(X_train, y_train)
 knn_pred = knn.predict(X_test)
 #### KNN accuracy
 knn_acc = accuracy_score(y_test, knn_pred)
-print(knn_acc)
+print("Knn acc",knn_acc)
 
 scores = []
 for i in range(1, 25):
@@ -126,7 +127,7 @@ knn_euclidean.fit(X_train, y_train)
 knn_euclidean_pred = knn_euclidean.predict(X_test)
 
 knn_acc = accuracy_score(y_test, knn_euclidean_pred)
-print(knn_acc)
+print("Knn_euclidean",knn_acc)
 
 ### To use Manhattan distance:
 knn_manhattan = KNN(k=13, distance_metric='manhattan')
@@ -134,7 +135,7 @@ knn_manhattan.fit(X_train, y_train)
 knn_manhattan_pred = knn_manhattan.predict(X_test)
 
 knn_acc = accuracy_score(y_test, knn_manhattan_pred)
-print(knn_acc)
+print("Knn_manhattan",knn_acc)
 
 ## Naive Bayes
 nb = GaussianNB()
@@ -143,7 +144,7 @@ nb.fit(X_train, y_train)
 nb_pred = nb.predict(X_test)
 #### naive bayes accuracy
 nb_acc = accuracy_score(y_test, nb_pred)
-print(nb_acc)
+print("nb_acc",nb_acc)
 
 ## Support vector machine
 sv = SVC()
@@ -152,7 +153,14 @@ sv.fit(X_train, y_train)
 sv_pred = sv.predict(X_test)
 #### svm accuracy
 sv_acc = accuracy_score(y_test, sv_pred)
-print(sv_acc)
+print("svm acc",sv_acc)
+
+# Support vector scratch
+clf = SVM()
+clf.fit(X_train, y_train)
+svs_pred = clf.predict(X_test)
+svs_acc = accuracy_score(y_test, svs_pred)
+print("scratch svm",svs_acc)
 
 ## Decision tree
 dt = DecisionTreeClassifier()
@@ -161,7 +169,7 @@ dt.fit(X_train, y_train)
 dt_pred = dt.predict(X_test)
 #### decision tree accuracy
 dt_acc = accuracy_score(y_test, dt_pred)
-print(dt_acc)
+print("dt_acc",dt_acc)
 
 ## Random forest
 rf = RandomForestClassifier()
@@ -170,4 +178,4 @@ rf.fit(X_train, y_train)
 rf_pred = rf.predict(X_test)
 #### random forest accuracy
 rf_acc = accuracy_score(y_test, rf_pred)
-print(rf_acc)
+print("rf_acc",rf_acc)
