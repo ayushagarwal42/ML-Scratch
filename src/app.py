@@ -7,7 +7,6 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-
 from src.Classification.LogisticRegression import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from src.Classification.KNN import KNN
@@ -18,13 +17,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
 df = pd.read_csv("diabetes.csv")
-
 df.head()
-
 df.isna().sum()
-
 df.info()
-
 df.describe()
 
 zeros_count = (df[['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']] == 0).sum()
@@ -40,12 +35,11 @@ df.describe()
 outcome_counts = df['Outcome'].value_counts()
 print(outcome_counts)
 
-plt.pie(outcome_counts, labels=outcome_counts.index, autopct='%1.1f%%', startangle=140)
-plt.title('Distribution of Outcome')
+print(plt.pie(outcome_counts, labels=outcome_counts.index, autopct='%1.1f%%', startangle=140))
+print(plt.title('Distribution of Outcome'))
 
-sns.countplot(data=df, x=df['Outcome'])
-
-df.hist(figsize=(20, 20))
+print(sns.countplot(data=df, x=df['Outcome']))
+print(df.hist())
 
 # columns_to_plot = [col for col in df.columns if col != 'Outcome']
 columns = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction']
@@ -59,12 +53,10 @@ for col in columns:
     plt.title(f'KDE Plot of {col} by Outcome')
     plt.show()
 
-
-
 corrmat = df.corr()
 print(corrmat)
 
-sns.heatmap(corrmat, annot=True, cmap="RdYlGn")
+print(sns.heatmap(corrmat, annot=True, cmap="RdYlGn"))
 
 # X=df.drop('Outcome','Pregnancies','BloodPressure','SkinThickness','Insulin','DiabetesPedigreeFunction',axis=1)
 X = df[['Glucose', 'BMI', 'Age']]

@@ -1,4 +1,5 @@
-Data Folder
+src/diabetes.csv
+src/path.py
 output images
 .idea
 __pycache__/
