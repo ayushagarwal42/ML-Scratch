@@ -17,7 +17,7 @@ from src.Classification.SVM import SVM
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
-df = pd.read_csv("C:/Users/This PC/Desktop/Machine Learning/ML-Scratch/Data Folder/diabetes.csv")
+df = pd.read_csv("diabetes.csv")
 
 df.head()
 
