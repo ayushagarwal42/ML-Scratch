@@ -188,3 +188,37 @@ plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 plt.legend()
 plt.show()
+
+from src.Clustering.MeanShiftClustering import MeanShift
+
+mean_shift = MeanShift(radius=2.5)
+mean_shift.fit(X_scaled)
+labels = mean_shift.predict(X_scaled)
+centroids = mean_shift.centroids
+print(np.unique(labels))
+print(centroids)
+from mpl_toolkits.mplot3d import Axes3D
+
+# Assuming X has 3 features
+feature1 = X_scaled[:, 0]
+feature2 = X_scaled[:, 1]
+feature3 = X_scaled[:, 2]
+
+# Create a 3D scatter plot to visualize the clusters
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+
+# Loop through each unique cluster label and plot the data points for that cluster
+for label in np.unique(labels):
+    cluster = X_scaled[labels == label]
+    ax.scatter(cluster[:, 0], cluster[:, 1], cluster[:, 2], label=f'Cluster {label}')
+# Plot the centroids
+for i, centroid in centroids.items():
+    ax.scatter(centroid[0], centroid[1], centroid[2], s=100, c='black', marker='X', label=f'Centroid {i}')
+
+ax.set_title('MeanShift Clustering')
+ax.set_xlabel('Feature 1')
+ax.set_ylabel('Feature 2')
+ax.set_zlabel('Feature 3')
+ax.legend()
+plt.show()
