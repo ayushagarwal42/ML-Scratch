@@ -3,12 +3,12 @@ import numpy as np
 
 class DBSCAN:
     def __init__(self, eps, min_samples):
-        self.eps = eps
-        self.min_samples = min_samples
+        self.eps = eps  # The maximum distance between two data points for them to be considered part of the same cluster
+        self.min_samples = min_samples  # The minimum number of data points required to form a dense region or cluster.
 
-    def fit(self, X):
-        self.X = X
-        self.labels = [0] * len(X)
+    def fit(self, X):  # X is a input data
+        self.X = X  # the input data is stored as self.X
+        self.labels = [0] * len(X)  #  An array of labels is initialized to zeros. These labels will be used to assign each data point to a cluster.
         self.cluster_id = 0
 
         for idx, point in enumerate(X):
