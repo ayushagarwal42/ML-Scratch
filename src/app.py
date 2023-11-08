@@ -1,3 +1,4 @@
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -14,6 +15,7 @@ from sklearn.tree import DecisionTreeClassifier
 from src.Classification.KNN import KNN
 from src.Classification.LogisticRegression import LogisticRegression
 from src.Classification.SVM import SVM
+from src.Clustering.DBSCAN import DBSCAN
 from src.Clustering.MeanShiftClustering import MeanShift
 from src.Clustering.kmeans import KMeans
 
@@ -69,7 +71,6 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=0)
-
 print(X_train.shape, y_train.shape)
 print(X_test.shape, y_test.shape)
 
@@ -235,3 +236,15 @@ ax.set_ylabel('Feature 2')
 ax.set_zlabel('Feature 3')
 ax.legend()
 plt.show()
+
+# dbscan
+dbscan = DBSCAN(eps=0.2, min_samples=5)
+cluster_labels = dbscan.fit(X_scaled)
+
+# Visualize the DBSCAN clusters
+plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=cluster_labels, cmap='viridis')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.title('DBSCAN Clustering')
+plt.show()
+
