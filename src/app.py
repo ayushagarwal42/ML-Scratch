@@ -18,6 +18,9 @@ from src.Classification.SVM import SVM
 from src.Clustering.DBSCAN import DBSCAN
 from src.Clustering.MeanShiftClustering import MeanShift
 from src.Clustering.kmeans import KMeans
+from sklearn.metrics import silhouette_score
+
+
 
 df = pd.read_csv("diabetes.csv")
 df.head()
@@ -205,6 +208,9 @@ plt.ylabel('Feature 2')
 plt.legend()
 plt.show()
 
+kmeans_silhouette_avg = silhouette_score(X_scaled, kmeans_labels)
+print(f"kmeans_Silhouette Score: {kmeans_silhouette_avg}")  # 0.321
+
 ## mean shift scratch
 mean_shift = MeanShift(radius=2.5)
 mean_shift.fit(X_scaled)
@@ -212,6 +218,9 @@ labels = mean_shift.predict(X_scaled)
 centroids = mean_shift.centroids
 print(np.unique(labels))
 print(centroids)
+
+mean_shift_silhouette_avg = silhouette_score(X_scaled, labels)
+print(f"mean_shift_Silhouette Score: {mean_shift_silhouette_avg}")  # 0.250
 
 # Assuming X has 3 features
 feature1 = X_scaled[:, 0]
@@ -241,10 +250,13 @@ plt.show()
 dbscan = DBSCAN(eps=0.2, min_samples=5)
 cluster_labels = dbscan.fit(X_scaled)
 
+# Compute Silhouette Score
+dbscan_silhouette_avg = silhouette_score(X_scaled, cluster_labels)
+print(f"dbscan_Silhouette Score: {dbscan_silhouette_avg}")  # -0.284
+
 # Visualize the DBSCAN clusters
 plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=cluster_labels, cmap='viridis')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 plt.title('DBSCAN Clustering')
 plt.show()
-
