@@ -9,6 +9,8 @@ class KMeans:
     def __init__(self, K=5, max_iters=100):
         self.max_iters = max_iters
         self.K = K
+        self.inertia = None  # To store the inertia value
+
 
         # list of samples indices for each cluster
         self.clusters = [[] for _ in range(self.K)]
@@ -29,8 +31,6 @@ class KMeans:
             # assign samples to the closest centroids (create clusters
             self.clusters = self._create_clusters(self.centroids)
 
-
-
             # calculate new centroids from the clusters
             centroids_old = self.centroids
             self.centroids = self._get_centroids(self.clusters)
@@ -38,10 +38,20 @@ class KMeans:
             if self._is_converged(centroids_old, self.centroids):
                 break
 
-
+        # Calculate the inertia value (within-cluster sum of squares)
+        self.inertia = self._calculate_inertia()
 
         # classify samples as the index of their clusters
         return self._get_cluster_labels(self.clusters)
+
+    def _calculate_inertia(self):
+        inertia = 0
+        for i in range(self.K):
+            cluster_samples = self.X[self.clusters[i]]
+            centroid = self.centroids[i]
+            distances = [euclidean_distance(sample, centroid) for sample in cluster_samples]
+            inertia += np.sum(np.square(distances))
+        return inertia
 
     def _get_cluster_labels(self, clusters):
         # each sample will get the label of the cluster it was assigned to
@@ -78,4 +88,3 @@ class KMeans:
         # distances bw old and new centroids for all centroids
         distances = [euclidean_distance(centroids_old[i], centroids[i]) for i in range(self.K)]
         return sum(distances) == 0
-
