@@ -1,20 +1,20 @@
-
-import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from src.Classification.LogisticRegression import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from src.Classification.KNN import KNN
-from sklearn.naive_bayes import GaussianNB
-from sklearn.svm import SVC
-from src.Classification.SVM import SVM
-from sklearn.tree import DecisionTreeClassifier
+import pandas as pd
+import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+
+from src.Classification.KNN import KNN
+from src.Classification.LogisticRegression import LogisticRegression
+from src.Classification.SVM import SVM
+from src.Clustering.MeanShiftClustering import MeanShift
 from src.Clustering.kmeans import KMeans
 
 df = pd.read_csv("diabetes.csv")
@@ -173,6 +173,21 @@ rf_pred = rf.predict(X_test)
 rf_acc = accuracy_score(y_test, rf_pred)
 print("rf_acc", rf_acc)
 
+## Kmeans scratch
+inertia_values = []
+for k in range(1, 7):
+    kmeans = KMeans(K=k)
+    kmeans.predict(X_scaled)
+    inertia_values.append(kmeans.inertia)
+
+# Plot the elbow curve
+plt.figure(figsize=(8, 6))
+plt.plot(range(1, 7), inertia_values, linestyle='--')
+plt.title('Elbow Method for Optimal K')
+plt.xlabel('Number of Clusters (K)')
+plt.ylabel('Inertia')
+plt.show()
+
 kmeans = KMeans(K=2)
 kmeans_labels = kmeans.predict(X_scaled)
 df['KMeans_Cluster'] = kmeans_labels
@@ -189,15 +204,13 @@ plt.ylabel('Feature 2')
 plt.legend()
 plt.show()
 
-from src.Clustering.MeanShiftClustering import MeanShift
-
+## mean shift scratch
 mean_shift = MeanShift(radius=2.5)
 mean_shift.fit(X_scaled)
 labels = mean_shift.predict(X_scaled)
 centroids = mean_shift.centroids
 print(np.unique(labels))
 print(centroids)
-from mpl_toolkits.mplot3d import Axes3D
 
 # Assuming X has 3 features
 feature1 = X_scaled[:, 0]
